@@ -303,17 +303,134 @@ public class MechanicShop{
 		}while (true);
 		return input;
 	}//end readChoice
-	
+
+	// Print a prompt and read user input as string
+	private static String readString(String prompt) {
+		String input;		
+		do {
+			System.out.println(prompt);
+			try {
+				input = in.readLine();
+				break;
+			} catch (Exception e) {
+				System.out.println("invalid input");
+				continue;
+			}
+		} while(true);
+
+		return input;
+	}
+
+	private static int readInt(String prompt) {
+		int input;
+		do {
+			System.out.println(prompt);
+			try {
+				input = Integer.parseInt(in.readLine());
+				break;	
+			} catch (Exception e) {
+				System.out.println("invalid input");
+				continue;
+			}
+		} while(true);
+
+		return input;
+	}
+
 	public static void AddCustomer(MechanicShop esql){//1
-		
+		// prompt user for data
+		String fname;
+		String lname;
+		String phone;
+		int id;
+		String address;
+
+		id = readInt("ID:");
+		fname = readString("First name:");
+		lname = readString("Last name:");
+		phone = readString("Phone number:");
+		address = readString("Address:");
+
+		// create SQL instruction
+		String sql;
+		sql = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES (\'" + id + "\', \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
+		System.out.println(sql);
+
+		// execute
+		try {
+			esql.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("Add Customer failed:");
+			System.out.println(e);
+		}
 	}
 	
 	public static void AddMechanic(MechanicShop esql){//2
-		
+		// prompt user for data
+		String fname;
+		String lname;
+		int id;
+		int years_exp;
+
+		id = readInt("ID:");
+		fname = readString("First name:");
+		lname = readString("Last name:");
+
+		do {
+			years_exp = readInt("Years of experience:");
+			if (years_exp < 0 || years_exp > 100) {
+				System.out.println("Years of experience must be between 0-100");
+				continue;
+			}
+			break;
+		} while(true);
+
+		// create SQL instruction
+		String sql;
+		sql = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES (\'" + id + "\', \'" + fname + "\', \'" + lname + "\', \'" + years_exp + "\');";
+		System.out.println(sql);
+
+		// execute
+		try {
+			esql.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("Add Mechanic failed:");
+			System.out.println(e);
+		}
 	}
 	
 	public static void AddCar(MechanicShop esql){//3
-		
+		// prompt user for data
+		String vin;
+		String make;
+		String model;
+		int year;
+
+		vin = readString("VIN:");
+		make = readString("Make:");
+		model = readString("Model:");
+
+		do {
+			year = readInt("Year:");
+			if (year < 1970) {
+				System.out.println("Year must be >= 1970");
+				continue;
+			}
+			break;
+		} while(true);
+
+		// create SQL instruction
+		String sql;
+		sql = "INSERT INTO Car(vin, make, model, year) VALUES (\'" + vin + "\', \'" + make + "\', \'" + model + "\', \'" + Integer.toString(year) + "\');";
+		System.out.println(sql);
+
+		// execute
+		try {
+			esql.executeUpdate(sql);
+		} catch (Exception e) {
+			System.out.println("Add Car failed:");
+			System.out.println(e);
+		}	
 	}
 	
 	public static void InsertServiceRequest(MechanicShop esql){//4
