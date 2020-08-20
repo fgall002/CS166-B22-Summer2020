@@ -5,7 +5,7 @@ echo "Database Name: " $LOGNAME"_DB"
 
 sleep 1
 
-cp ../data/*.csv /tmp/$LOGNAME/test/data/.
+cp ./*.dat /tmp/$LOGNAME/test/data/.
 
 sleep 1
 
