@@ -1,10 +1,12 @@
 #! /bin/bash
-export DB_NAME=$USER"_DB"
-echo "creating db named ... "$DB_NAME
-createdb -h localhost -p $PGPORT $DB_NAME
-pg_ctl status
+createdb -h /tmp/$LOGNAME/sockets $LOGNAME"_DB"
 
-cp *.dat $PGDATA/
+echo "Database Name: " $LOGNAME"_DB"
+
 sleep 1
 
-psql -h localhost -p $PGPORT $DB_NAME < create_tables.sql > /dev/null
+cp ../data/*.csv /tmp/$LOGNAME/test/data/.
+
+sleep 1
+
+psql -h /tmp/$LOGNAME/sockets $LOGNAME"_DB" < create_tables.sql > /dev/null
